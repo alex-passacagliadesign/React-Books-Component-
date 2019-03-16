@@ -10,7 +10,7 @@ const BookShelf = styled.div`
 
 	/* Container */
 	max-width: 900px;
-	margin: 40px auto 0 auto;
+	margin: 1rem auto 0 auto;
 
 	/* Media Queries */
 	@media (max-width: 700px) {
@@ -19,17 +19,36 @@ const BookShelf = styled.div`
 	}
 `;
 
-const Booklist = () => {
-	return (
-		<BookShelf>
-			<BookItem title={'Human Errors'} author={'Nathan H. Lents'} status={'reading'} />
-			<BookItem title={'Radical Technologies: The Design of Everyday Life '} status={'reading'} />
-			<BookItem title={'The Death and Life of Great American Cities'} status={'reading'} />
-			<BookItem title={'Thinking, Fast and Slow'} status={'reading'} />
-			<BookItem title={'The Design of Everyday Things'} status={'reading'} />
-			<BookItem title={'Primate Change: How the World We Made is Remaking Us'} status={'read'} />
-		</BookShelf>
-	);
-};
+class BookList extends React.Component {
+	state = {
+		books: [
+			{ title: 'Human Errors', status: 'Completed' },
+			{ title: 'Radical Technologies: The Design of Everyday Life', status: 'In progress' },
+			{ title: 'The Death and Life of Great American Cities', status: 'In progress' },
+			{ title: 'Primate Change', status: 'Completed' },
+			{ title: 'Usable Usability', status: 'Queued' },
+			{ title: 'Thinking, Fast and Slow', status: 'Completed' },
+			{ title: 'The Design of Everyday Objects', status: 'In progress' }
+		],
 
-export default Booklist;
+		filteredBooks: []
+	};
+
+	createBookItem = (book, index) => {
+		return <BookItem title={book.title} key={index} />;
+	};
+
+	checkBookStatus = (book, index) => {
+		if (book.status === this.props.selectedFilter) {
+			return book.title;
+		} else if (this.props.selectedFilter === 'All') {
+			return this.state.books[index].title;
+		}
+	};
+
+	render() {
+		return <BookShelf>{this.state.books.filter(this.checkBookStatus).map(this.createBookItem)}</BookShelf>;
+	}
+}
+
+export default BookList;

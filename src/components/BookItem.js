@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import GoogleBooks from '../api/GoogleBooks';
+import BookLoader from './BookLoader';
 
 const BookCard = styled.div`
 	/* Flex */
@@ -26,7 +27,7 @@ const BookCard = styled.div`
 const BookInfo = styled.div`
 	/* Flex */
 	padding-left: 1rem;
-	margin: 0 auto;
+	margin: auto 0;
 `;
 
 class BookItem extends React.Component {
@@ -52,7 +53,14 @@ class BookItem extends React.Component {
 	//If the content has loaded, display it
 	//If content is loading, display a loading variation of the BookCard
 
-	render() {
+	renderContent() {
+		if (this.state.bookCover == null || this.state.bookAuthor == null) {
+			return (
+				<BookCard>
+					<BookLoader />
+				</BookCard>
+			);
+		}
 		return (
 			<BookCard>
 				<div className="book-cover">
@@ -64,6 +72,10 @@ class BookItem extends React.Component {
 				</BookInfo>
 			</BookCard>
 		);
+	}
+
+	render() {
+		return this.renderContent();
 	}
 }
 
