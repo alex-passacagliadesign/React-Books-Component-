@@ -1,22 +1,22 @@
 import React from 'react';
 import BookList from './BookList';
 import BookFilter from './BookFilter';
-// import axios from 'axios';
-// import GoogleBooks from '../api/GoogleBooks';
+import BookShelf from './BookList';
 
 class App extends React.Component {
-	state = { selectedFilter: 'All', FilteredBooks: [] };
-
-	// onApplyFilter = async (Filter) => {
-	// 	//Receive array of filtered books
-	// 	//loop through array items and fetch book title
-	// 	//make api call with book titles (one multiple api call should be quicker than 5+ individual calls)
-	// 	const response = await GoogleBooks.get('/books/v1/volumes/', {
-	// 		params: {
-	// 			q: title
-	// 		}
-	// 	});
-	// };
+	state = {
+		books: [
+			{ title: 'Human Errors', status: 'Completed' },
+			{ title: 'Radical Technologies: The Design of Everyday Life', status: 'In progress' },
+			{ title: 'The Death and Life of Great American Cities', status: 'In progress' },
+			{ title: 'Primate Change', status: 'Completed' },
+			{ title: 'Usable Usability', status: 'Queued' },
+			{ title: 'Thinking, Fast and Slow', status: 'Completed' },
+			{ title: 'The Design of Everyday Objects', status: 'In progress' }
+		],
+		selectedFilter: 'All',
+		filteredBooks: []
+	};
 
 	onSelectFilter = (Filter) => {
 		this.setState({ selectedFilter: Filter });
