@@ -10,8 +10,10 @@ const books = [
 	{ title: 'The Design of Everyday Objects', status: 'In progress' }
 ];
 
-const BookList = (props) => {
-	return "Oee look at me I'm the BookList";
-};
+class BookList extends React.Component {
+	render() {
+		return <div>{books.filter(this.checkBookStatus)}</div>;
+	}
+}
 
 export default BookList;
