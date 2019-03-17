@@ -11,8 +11,9 @@ class BookFilter extends React.Component {
 			<FlexContainer>
 				<FilterType>
 					<select
+						//Set default filter value to prop filter value
 						value={this.props.selectedFilter}
-						// onChange={(e) => this.setState({ selectedFilter: e.target.value })}
+						//When the filter is changed, pass new filter value to callback function
 						onChange={(e) => this.props.onSelectFilter(e.target.value)}
 					>
 						<option value="All">All</option>

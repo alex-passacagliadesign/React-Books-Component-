@@ -30,13 +30,15 @@ const BookInfo = styled.div`
 	margin: auto 0;
 `;
 
+//This component contains too much logic, I want to remove the api call (Which I believe is causing the book covers to render incorrectly) and make the component as 'dumb' as possible
 class BookItem extends React.Component {
 	state = { bookCover: null, bookAuthor: null };
-	//When the component mounts, call the api function with the title prop
+	//When each book component mounts, call the api function with the title prop
 	componentDidMount() {
 		this.loadBookCover(this.props.title);
 	}
 
+	//make api call with the the received book title prop
 	loadBookCover = async (title) => {
 		const response = await GoogleBooks.get('/books/v1/volumes/', {
 			params: {
@@ -44,16 +46,15 @@ class BookItem extends React.Component {
 			}
 		});
 
+		//assign the state variables to the api response values
 		this.setState({
 			bookCover: response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
 			bookAuthor: response.data.items[0].volumeInfo.authors
 		});
 	};
 
-	//If the content has loaded, display it
-	//If content is loading, display a loading variation of the BookCard
-
 	renderContent() {
+		//If content is loading, or not present display a loading card
 		if (this.state.bookCover == null || this.state.bookAuthor == null) {
 			return (
 				<BookCard>
@@ -62,6 +63,7 @@ class BookItem extends React.Component {
 			);
 		}
 		return (
+			//If the state variables have been updated with api response create a new book component with api response data
 			<BookCard>
 				<div className="book-cover">
 					<img src={this.state.bookCover} alt={this.props.title + ' book cover'} />

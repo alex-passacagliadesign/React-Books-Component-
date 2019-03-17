@@ -20,34 +20,24 @@ const BookShelf = styled.div`
 `;
 
 class BookList extends React.Component {
-	state = {
-		books: [
-			{ title: 'Human Errors', status: 'Completed' },
-			{ title: 'Radical Technologies: The Design of Everyday Life', status: 'In progress' },
-			{ title: 'The Death and Life of Great American Cities', status: 'In progress' },
-			{ title: 'Primate Change', status: 'Completed' },
-			{ title: 'Usable Usability', status: 'Queued' },
-			{ title: 'Thinking, Fast and Slow', status: 'Completed' },
-			{ title: 'The Design of Everyday Objects', status: 'In progress' }
-		],
-
-		filteredBooks: []
+	//Filter function that checks to see if the current book's status matches the selected filter value
+	checkBookStatus = (book, index) => {
+		if (book.status === this.props.selectedFilter) {
+			return book.title;
+			//On default filter value, display all books
+		} else if (this.props.selectedFilter === 'All') {
+			return this.props.fullBookList[index].title;
+		}
 	};
 
+	//Map function that receives the titles of the books that match the filter and returns JSX element
 	createBookItem = (book, index) => {
 		return <BookItem title={book.title} key={index} />;
 	};
 
-	checkBookStatus = (book, index) => {
-		if (book.status === this.props.selectedFilter) {
-			return book.title;
-		} else if (this.props.selectedFilter === 'All') {
-			return this.state.books[index].title;
-		}
-	};
-
 	render() {
-		return <BookShelf>{this.state.books.filter(this.checkBookStatus).map(this.createBookItem)}</BookShelf>;
+		//Iterate through library, filter and then map the books whose status matches the selected filter
+		return <BookShelf>{this.props.fullBookList.filter(this.checkBookStatus).map(this.createBookItem)}</BookShelf>;
 	}
 }
 
