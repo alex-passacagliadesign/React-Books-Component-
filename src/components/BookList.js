@@ -11,6 +11,12 @@ const books = [
 ];
 
 class BookList extends React.Component {
+	checkBookStatus(book, index) {
+		if (book === this.props.selectedFilter) {
+			console.log(book.title);
+		}
+	}
+
 	render() {
 		return <div>{books.filter(this.checkBookStatus)}</div>;
 	}
